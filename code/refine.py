@@ -5,3 +5,10 @@
 # – this step must be automated and documented in case one may need to re-run it, although it’s
 #   not necessary to repeat it each time while re-running the analysis
 import pandas as pd
+
+def removeNAN(df):
+    for column in df:
+        numOfNan = df[column].isnull().sum()
+        if numOfNan < len(df[column]) / 2:
+            df = df.dropna(subset=[column])
+    return df
