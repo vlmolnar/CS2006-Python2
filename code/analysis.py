@@ -3,7 +3,7 @@
 # – calculate the average number of tweets, retweets and replies sent by a user
 # – identify most popular hashtags
 
-from collections import Counter#
+from collections import Counter
 import json
 import pandas as pd
 import re
@@ -40,7 +40,14 @@ def averagesForData(df):
     averageTweetsPerUser = getTotalNumberOfTweets(df) / users
     averageRetweetsPerUser = getNumberOfRetweets(df) / users
     averageRepliesPerUser = getNumberOfReplies(df) / users
-    return averageTweetsPerUser
+    return (averageTweetsPerUser, averageRetweetsPerUser, averageRepliesPerUser)
+
+#prints results from function averagesForData(df)
+def printAverages(df):
+    tw, retw, rep = averagesForData(df)
+    print("Average number of tweets per user", tw);
+    print("Average number of retweets per user", retw);
+    print("Average number of replies per user", rep);
 
 
 # print data
@@ -53,12 +60,15 @@ def printAnalysis(df):
     for tag,num in pop:
         print(tag,"-", num)
 
+# This function appends all text in entities[hashtag] into a flat list
+# Then it uses the counter in collection model to count frequencies
+# Note: hashtags are not case sensitive
 def getMostPopularHashtags(df, take):
     hashtags = []
     for entity in df["entities_str"]:
         data = json.loads(entity)
         for hashtag in data["hashtags"]:
-            hashtags.append(hashtag["text"])
+            hashtags.append(hashtag["text"].lower())
     counter = Counter(hashtags)
     popular = counter.most_common(take)
     return popular
