@@ -8,8 +8,8 @@ import json
 import pandas as pd
 import re
 
-# return total number of tweets and retweets and replies in dataset
-def getTotalNumberOfTweets(df):
+# return number of unique tweets in dataset
+def getNumberOfOriginalTweets(df):
     retweets = getNumberOfRetweets(df)
     replies = getNumberOfReplies(df)
     return len(df) - (retweets + replies)
@@ -27,6 +27,10 @@ def getNumberOfRetweets(df):
 def getNumberOfReplies(df):
     return df["in_reply_to_user_id_str"].notnull().sum()
 
+# return the total number of tweets
+def getTotalTweetNumber(df):
+    return getNumberOfRetweets(df) + getNumberOfOriginalTweets(df) + getNumberOfReplies(df)
+
 # number of tweets defined as number of unique id's in the dataset
 def getNumberOfUniqueUsers(df):
     return len(df["from_user"].unique())
@@ -37,7 +41,7 @@ def getNumberOfUniqueUsers(df):
 #
 def averagesForData(df):
     users = getNumberOfUniqueUsers(df)
-    averageTweetsPerUser = getTotalNumberOfTweets(df) / users
+    averageTweetsPerUser = getNumberOfOriginalTweets(df) / users
     averageRetweetsPerUser = getNumberOfRetweets(df) / users
     averageRepliesPerUser = getNumberOfReplies(df) / users
     return (averageTweetsPerUser, averageRetweetsPerUser, averageRepliesPerUser)
@@ -52,9 +56,10 @@ def printAverages(df):
 
 # print data
 def printAnalysis(df):
-    print("Number of Retweets:", getNumberOfRetweets(df))
+    print("Number of retweets:", getNumberOfRetweets(df))
     print("Number of replies:", getNumberOfReplies(df))
-    print("Number of tweets:", getTotalNumberOfTweets(df))
+    print("Number of original tweets:", getNumberOfOriginalTweets(df))
+    print("Number of tweets in total: ", getTotalTweetNumber(df))
     pop = getMostPopularHashtags(df, 5)
     print("most popular hashtags:")
     for tag,num in pop:
