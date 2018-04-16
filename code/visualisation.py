@@ -10,13 +10,18 @@ import analysis as an
 
 def getTimesCreated(df):
     times = []
+    day = parser.parse(df["created_at"][0])
+    tweetsPerDay = 0
     for time in df["created_at"]:
         dt = parser.parse(time)
-        times.append(dt)
-    return times[:10]
-    counter = Counter(time)
-    popular = counter.most_common()
-    #return popular[:5]
+        if dt.day == day.day:
+            tweetsPerDay += 1
+        else:
+            times.append((day, tweetsPerDay))
+            day = dt
+            tweetsPerDay = 1
+    times.append((day, tweetsPerDay))
+    return times
 
 # Creates pie chart of the number of tweets, retweets and replies
 # Reference: https://matplotlib.org/examples/pie_and_polar_charts/pie_demo_features.html
