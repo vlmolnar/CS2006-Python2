@@ -17,22 +17,19 @@ def removeNAN(df):
 
 # Makes user_lang lowercase so that e.g. "en-gb" and "en-GB" are grouped together
 def langCheck(df):
+    df["user_lang"] = df["user_lang"].fillna(value="en")
     df["user_lang"] = df["user_lang"].apply(lambda x: x.lower())
     return df
 
 # Checks whether username is valid according to Twitter specifications
 def fromUserCheck(df):
-    for i in df["from_user"]:
-        #Checks if it contains invalid characters
-        if re.search(r'[^a-zA-Z0-9_]', i) or len(i) > 15:
-            df = df.dropna(subset=["from_user"])
+    df[df["from_user"].apply(lambda x: len(x) <= 10) &
+    df["from_user"].apply(lambda x: re.search(r'[a-zA-Z0-9_]', x))]
     return df
 
 # Drops all rows that have a text length exceeding 140 chars
 def textCheck(df):
-    for i in df["text"]:
-        if len(i) > 140:
-            df = df.dropna(subset=["text"])
+    df[df["text"].apply(lambda x: len(x) <= 150)]
     return df
 
 # Creates new CSV file with the cleaned dataset
