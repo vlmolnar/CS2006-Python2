@@ -40,7 +40,7 @@ def makeCSV(df):
 def cleanData(df):
     df=pd.read_csv("../data/CometLanding.csv")
     df = df.drop_duplicates(keep = False)
-    df = rf.removeNAN(df)
     df = rf.langCheck(df)
+    df = rf.removeNAN(df)
     df = rf.fromUserCheck(df)
     df = rf.textCheck(df)
