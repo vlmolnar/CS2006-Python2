@@ -3,6 +3,7 @@
 # – the timeline of the tweets activity
 # – the word cloud for all other hashtags used in the tweets from the dataset
 from collections import Counter
+import pandas as pd
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
@@ -13,7 +14,8 @@ import urllib.request
 import json
 
 #API request
-apiURL = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCPCC8oAS-KmKp7PTSC3ZRwbsCqReR231I&latlng=40.714224,-73.961452&sensor=true/false"
+apiKey = "AIzaSyCPCC8oAS-KmKp7PTSC3ZRwbsCqReR231I"
+apiURL = "https://maps.googleapis.com/maps/api/geocode/json?key=" + apiKey + "&latlng=%s&sensor=true/false"
 
 def getTweetsPerDay(df):
     times = []
@@ -39,9 +41,15 @@ def getTweetsAtTimeOfDay(df):
 
 #gettting locations
 def getLocationsOfUsers(df):
-    resp = urllib.request.urlopen(apiURL)
-    data = json.loads(resp.read().decode())
-    print(data)
+    for coords in df["geo_coordinates"]:
+        if pd.notnull(coords) and coords != "loc: 0,0":
+            latlong = coords[5:]
+            resp = urllib.request.urlopen(apiURL % latlong)
+            data = json.loads(resp.read().decode())
+            # print(data)
+            # break
+            if len(data["results"]) > 0:
+                print(data["results"][0]["address_components"][6])
 
 
 def plotTweetsPerDay(data):
