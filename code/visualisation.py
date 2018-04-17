@@ -5,18 +5,39 @@
 from collections import Counter
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 from dateutil import parser
+from datetime import datetime
 import analysis as an
 
-def getTimesCreated(df):
+def getTweetsPerDay(df):
     times = []
+    day = parser.parse(df["created_at"][0])
+    tweetsPerDay = 0
     for time in df["created_at"]:
         dt = parser.parse(time)
-        times.append(dt)
-    return times[:10]
-    counter = Counter(time)
-    popular = counter.most_common()
-    #return popular[:5]
+        if dt.day == day.day:
+            tweetsPerDay += 1
+        else:
+            times.append((day, tweetsPerDay))
+            day = dt
+            tweetsPerDay = 1
+    times.append((day, tweetsPerDay))
+    return times
+
+def getTweetsAtTimeOfDay(df):
+    hours = []
+    
+
+def plotTweetsPerDay(data):
+    plt.plot([dt.date() for dt,num in data],
+                [num for dt,num in data],
+                linewidth = 5.0)
+    plt.xlabel("dates of tweets")
+    plt.ylabel("tweeets per day")
+    plt.yscale("log")
+    plt.gcf().autofmt_xdate()
+    plt.show()
 
 #Function that makes a pie chart given a list of labels and a list of sizes
 def makePie(labels, sizes):
