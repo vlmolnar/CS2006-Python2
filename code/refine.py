@@ -36,7 +36,7 @@ def textCheck(df):
 def makeCSV(df):
     df.to_csv("../data/CometLanding_ref.csv", index=False)
 
-# Function to clean data outside Jupyter Notebook
+# Function to refine data outside Jupyter Notebook
 def cleanData(df):
     df=pd.read_csv("../data/CometLanding.csv")
     df = df.drop_duplicates(keep = False)

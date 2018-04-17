@@ -77,3 +77,21 @@ def getMostPopularHashtags(df, take):
     counter = Counter(hashtags)
     popular = counter.most_common(take)
     return popular
+
+#Returns dictionary of the applications used to send out tweets and the
+# number of tweets sent on said application
+def getAppsUsed(df):
+    apps = {}
+    for element in df["source"]:
+        tokens = re.findall(r"[^><\/>]+", element) # r"[^><\/a>]"  [\w' ]+
+        name = tokens[-2]
+        if not name in apps:
+            apps[name] = 1
+        else:
+            apps[name] += 1
+    print(apps)
+    return apps
+
+# Takes a dictionary and returns the x most popular and groups the others together
+def getPopularApps(x, apps):
+    print(hi)
