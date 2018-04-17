@@ -9,6 +9,11 @@ import matplotlib.dates as mdates
 from dateutil import parser
 from datetime import datetime
 import analysis as an
+import urllib.request
+import json
+
+#API request
+apiURL = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCPCC8oAS-KmKp7PTSC3ZRwbsCqReR231I&latlng=40.714224,-73.961452&sensor=true/false"
 
 def getTweetsPerDay(df):
     times = []
@@ -24,6 +29,20 @@ def getTweetsPerDay(df):
             tweetsPerDay = 1
     times.append((day, tweetsPerDay))
     return times
+
+# needs to be dicussed
+def getTweetsAtTimeOfDay(df):
+    hours = []
+    hour = 0
+    tweetsAtHour
+    #for time in df[""]
+
+#gettting locations
+def getLocationsOfUsers(df):
+    resp = urllib.request.urlopen(apiURL)
+    data = json.loads(resp.read().decode())
+    print(data)
+
 
 def plotTweetsPerDay(data):
     plt.plot([dt.date() for dt,num in data],
