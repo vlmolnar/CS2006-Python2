@@ -78,6 +78,11 @@ def getMostPopularHashtags(df, take):
     popular = counter.most_common(take)
     return popular
 
+# Calls functions below to find 5 most popular apps and others
+def getMostPopularApps(df):
+    apps = getAppsUsed(df)
+    return getPopularApps(5, apps)
+
 #Returns dictionary of the applications used to send out tweets and the
 # number of tweets sent on said application
 def getAppsUsed(df):
@@ -89,7 +94,7 @@ def getAppsUsed(df):
             apps[name] = 1
         else:
             apps[name] += 1
-    print(apps)
+    # print(apps)
     return apps
 
 # Takes a dictionary and returns the "num" most popular and groups the others together
@@ -106,4 +111,5 @@ def getPopularApps(num, apps):
         else :
             othersVal += apps[elem]
     popular["Other"] = othersVal
-    print(popular)
+    # print(popular)
+    return popular
