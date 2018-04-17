@@ -92,6 +92,18 @@ def getAppsUsed(df):
     print(apps)
     return apps
 
-# Takes a dictionary and returns the x most popular and groups the others together
-def getPopularApps(x, apps):
-    print(hi)
+# Takes a dictionary and returns the "num" most popular and groups the others together
+def getPopularApps(num, apps):
+    sortedkeys = []
+    popular = {}
+    othersVal = 0
+
+    for a in sorted(apps, key=apps.get, reverse=True):
+        sortedkeys.append(a)
+    for i, elem in enumerate(sortedkeys):
+        if i < num:
+            popular[elem] = apps[elem]
+        else :
+            othersVal += apps[elem]
+    popular["Other"] = othersVal
+    print(popular)
