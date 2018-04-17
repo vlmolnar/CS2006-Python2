@@ -9,6 +9,7 @@ from dateutil import parser
 import analysis as an
 
 def getTimesCreated(df):
+    #new brach
     times = []
     day = parser.parse(df["created_at"][0])
     tweetsPerDay = 0
