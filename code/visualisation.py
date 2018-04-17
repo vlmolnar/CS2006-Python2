@@ -5,11 +5,12 @@
 from collections import Counter
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 from dateutil import parser
+from datetime import datetime
 import analysis as an
 
-def getTimesCreated(df):
-    #new brach
+def getTweetsPerDay(df):
     times = []
     day = parser.parse(df["created_at"][0])
     tweetsPerDay = 0
@@ -23,6 +24,16 @@ def getTimesCreated(df):
             tweetsPerDay = 1
     times.append((day, tweetsPerDay))
     return times
+
+def plotTweetsPerDay(data):
+    plt.plot([dt.date() for dt,num in data],
+                [num for dt,num in data],
+                linewidth = 5.0)
+    plt.xlabel("dates of tweets")
+    plt.ylabel("tweeets per day")
+    plt.yscale("log")
+    plt.gcf().autofmt_xdate()
+    plt.show()
 
 # Creates pie chart of the number of tweets, retweets and replies
 # Reference: https://matplotlib.org/examples/pie_and_polar_charts/pie_demo_features.html
