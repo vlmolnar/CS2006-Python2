@@ -25,6 +25,10 @@ def getTweetsPerDay(df):
     times.append((day, tweetsPerDay))
     return times
 
+def getTweetsAtTimeOfDay(df):
+    hours = []
+    
+
 def plotTweetsPerDay(data):
     plt.plot([dt.date() for dt,num in data],
                 [num for dt,num in data],
