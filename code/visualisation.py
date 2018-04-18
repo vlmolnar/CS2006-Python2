@@ -17,40 +17,12 @@ import json
 apiKey = "AIzaSyCPCC8oAS-KmKp7PTSC3ZRwbsCqReR231I"
 apiURL = "https://maps.googleapis.com/maps/api/geocode/json?key=" + apiKey + "&latlng=%s&sensor=true/false"
 
-def getTweetsPerDay(df):
-    times = []
-    day = parser.parse(df["created_at"][0])
-    tweetsPerDay = 0
-    for time in df["created_at"]:
-        dt = parser.parse(time)
-        if dt.day == day.day:
-            tweetsPerDay += 1
-        else:
-            times.append((day, tweetsPerDay))
-            day = dt
-            tweetsPerDay = 1
-    times.append((day, tweetsPerDay))
-    return times
-
 # needs to be dicussed
 def getTweetsAtTimeOfDay(df):
     hours = []
     hour = 0
     tweetsAtHour
     #for time in df[""]
-
-#gettting locations
-def getLocationsOfUsers(df):
-    for coords in df["geo_coordinates"]:
-        if pd.notnull(coords) and coords != "loc: 0,0":
-            latlong = coords[5:]
-            resp = urllib.request.urlopen(apiURL % latlong)
-            data = json.loads(resp.read().decode())
-            # print(data)
-            # break
-            if len(data["results"]) > 0:
-                print(data["results"][0]["address_components"][6])
-
 
 def plotTweetsPerDay(data):
     plt.plot([dt.date() for dt,num in data],
