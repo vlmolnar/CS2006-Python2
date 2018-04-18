@@ -70,12 +70,16 @@ def printAnalysis(df):
 # Note: hashtags are not case sensitive
 def getMostPopularHashtags(df, take):
     hashtags = []
+    popular = []
     for entity in df["entities_str"]:
         data = json.loads(entity)
         for hashtag in data["hashtags"]:
             hashtags.append(hashtag["text"].lower())
     counter = Counter(hashtags)
-    popular = counter.most_common(take)
+    if take == -1:
+        popular = counter.most_common()
+    else:
+        popular = counter.most_common(take)
     return popular
 
 # Calls functions below to find 5 most popular apps and others
@@ -94,7 +98,6 @@ def getAppsUsed(df):
             apps[name] = 1
         else:
             apps[name] += 1
-    # print(apps)
     return apps
 
 # Takes a dictionary and returns the "num" most popular and groups the others together
@@ -111,5 +114,4 @@ def getPopularApps(num, apps):
         else :
             othersVal += apps[elem]
     popular["Other"] = othersVal
-    # print(popular)
     return popular

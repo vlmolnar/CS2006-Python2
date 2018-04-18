@@ -9,6 +9,7 @@ import matplotlib.dates as mdates
 from dateutil import parser
 from datetime import datetime
 import analysis as an
+from wordcloud import WordCloud
 
 def getTweetsPerDay(df):
     times = []
@@ -27,7 +28,7 @@ def getTweetsPerDay(df):
 
 def getTweetsAtTimeOfDay(df):
     hours = []
-    
+
 
 def plotTweetsPerDay(data):
     plt.plot([dt.date() for dt,num in data],
@@ -72,3 +73,21 @@ def plotApps(df):
         sizes.append(apps[key])
 
     makePie(labels, sizes)
+
+def plotHashtagCloud(df):
+    hashtags = an.getMostPopularHashtags(df, 100)
+    plotWordCloud(hashtags)
+
+
+def plotWordCloud(hashtags):
+    wordcloud = WordCloud(
+                          background_color='white',
+                          width=1200,
+                          height=1000
+                         ).generate(str(hashtags))  # {"a":10, "b": 30, "c": 3}
+
+    print(wordcloud)
+    fig = plt.figure(1)
+    plt.imshow(wordcloud)
+    plt.axis('off')
+    plt.show()
