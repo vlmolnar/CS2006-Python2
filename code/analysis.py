@@ -17,6 +17,7 @@ def getNumberOfOriginalTweets(df):
 # returns the number of tweets that match a certain pattern
 def getNumberOfRetweets(df):
     count = 0
+    #count = df[df["text"].apply(lambda x: re.search("RT @", x))]
     for i,row in df.iterrows():
         match = re.search("RT @", row["text"])
         if match != None:

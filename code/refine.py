@@ -5,6 +5,7 @@
 # – this step must be automated and documented in case one may need to re-run it, although it’s
 #   not necessary to repeat it each time while re-running the analysis
 import pandas as pd
+import sys
 import re
 
 # Removes all rows that have null values if null is the minority of values for the given clumn
@@ -23,7 +24,7 @@ def langCheck(df):
 
 # Checks whether username is valid according to Twitter specifications
 def fromUserCheck(df):
-    df[df["from_user"].apply(lambda x: len(x) <= 10) &
+    df[df["from_user"].apply(lambda x: len(x) <= 15) &
     df["from_user"].apply(lambda x: re.search(r'[a-zA-Z0-9_]', x))]
     return df
 
@@ -38,9 +39,14 @@ def makeCSV(df):
 
 # Function to refine data outside Jupyter Notebook
 def cleanData(df):
-    df=pd.read_csv("../data/CometLanding.csv")
     df = df.drop_duplicates(keep = False)
-    df = rf.langCheck(df)
-    df = rf.removeNAN(df)
-    df = rf.fromUserCheck(df)
-    df = rf.textCheck(df)
+    # df = langCheck(df)
+    df = removeNAN(df)
+    df = fromUserCheck(df)
+    df = textCheck(df)
+    return df
+
+if __name__ == "__main__":
+    df=pd.read_csv("../data/CometLanding.csv")
+    df = cleanData(df)
+    makeCSV(df)
