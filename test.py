@@ -3,8 +3,8 @@ import unittest
 
 def suite():
     test_cases = [
-        "test.test_refine.RefineTest",
-        "test_analysis.AnalysisTest"
+        "tests.test_refine.RefineTest"
+        #"tests.test_analysis.AnalysisTest"
         #"test_visualisation.VisualisationTest"
         #"test_map.MapTest"
     ]

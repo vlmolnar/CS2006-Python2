@@ -40,7 +40,7 @@ def makeCSV(df):
 # Function to refine data outside Jupyter Notebook
 def cleanData(df):
     df = df.drop_duplicates(keep = False)
-    # df = langCheck(df)
+    df = langCheck(df)
     df = removeNAN(df)
     df = fromUserCheck(df)
     df = textCheck(df)
