@@ -2,3 +2,8 @@ pandas
 matplotlib
 wordcloud
 py-dateutil
+numpy
+cython
+scipy
+matplotlib
+cartopy
