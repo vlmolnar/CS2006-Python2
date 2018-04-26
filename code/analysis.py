@@ -149,14 +149,11 @@ def getTweetsAtTimeOfDayGlobal(df):
     return hours
 
 # This function returns a dict of the number of tweets per hour
-# time zone is local time
+# time zone is local time -- not exactly correct¬¬¬¬¬¬ # TODO change this because not needed
 def getTweetsAtTimeOfDayLocal(df):
     hours = {}
     for time in df["time"]:
-        print(time)
         dt = parser.parse(time)
-        print(dt)
-        break
         if dt.hour in hours:
             hours[dt.hour] += 1
         else:
