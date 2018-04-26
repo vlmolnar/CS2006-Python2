@@ -3,6 +3,6 @@ matplotlib
 wordcloud
 py-dateutil
 numpy
-cython
+cython>=0.15.1
 scipy
 cartopy
