@@ -5,5 +5,4 @@ py-dateutil
 numpy
 cython
 scipy
-matplotlib
 cartopy

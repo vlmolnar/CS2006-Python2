@@ -10,8 +10,7 @@ class toMap:
 
     def setMap(self):
         # --- Save Countries,users---------
-        dirname = os.path.dirname(__file__)
-        filename = './locations.csv'
+        filename = 'locations.csv'
         num_users = []
         country_names = []
 

@@ -5,6 +5,8 @@
 
 from collections import Counter
 import json
+from dateutil import parser
+from datetime import datetime
 import pandas as pd
 import re
 
@@ -117,6 +119,8 @@ def getPopularApps(num, apps):
     popular["Other"] = othersVal
     return popular
 
+# This functio returns a list of tuples that are used to plot the number of
+# tweets per day
 def getTweetsPerDay(df):
     times = []
     day = parser.parse(df["created_at"][0])
@@ -131,6 +135,34 @@ def getTweetsPerDay(df):
             tweetsPerDay = 1
     times.append((day, tweetsPerDay))
     return times
+
+# This function returns a dict of the number of tweets per hour
+# time zone is Pacific Time (PT)
+def getTweetsAtTimeOfDayGlobal(df):
+    hours = {}
+    for time in df["created_at"]:
+        dt = parser.parse(time)
+        if dt.hour in hours:
+            hours[dt.hour] += 1
+        else:
+            hours[dt.hour] = 1
+    return hours
+
+# This function returns a dict of the number of tweets per hour
+# time zone is local time
+def getTweetsAtTimeOfDayLocal(df):
+    hours = {}
+    for time in df["time"]:
+        print(time)
+        dt = parser.parse(time)
+        print(dt)
+        break
+        if dt.hour in hours:
+            hours[dt.hour] += 1
+        else:
+            hours[dt.hour] = 1
+    return hours
+
 
 #gettting locations
 def getLocationsOfUsers(df):

@@ -16,16 +16,13 @@ from wordcloud import WordCloud
 apiKey = "AIzaSyCPCC8oAS-KmKp7PTSC3ZRwbsCqReR231I"
 apiURL = "https://maps.googleapis.com/maps/api/geocode/json?key=" + apiKey + "&latlng=%s&sensor=true/false"
 
-# needs to be dicussed
-def getTweetsAtTimeOfDay(df):
-    hours = []
-    hour = 0
-    tweetsAtHour
-    #for time in df[""]
+def plotTweetsPerHour(data):
+    hours = list(data.keys())
+    tweets = data.values()
+    width = 1/1.5
+    plt.bar(hours, tweets, width, color="blue")
 
-def getTweetsAtTimeOfDay(df):
-    hours = []
-
+    plt.show()
 
 def plotTweetsPerDay(data):
     plt.plot([dt.date() for dt,num in data],
