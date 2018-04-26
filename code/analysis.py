@@ -116,3 +116,36 @@ def getPopularApps(num, apps):
             othersVal += apps[elem]
     popular["Other"] = othersVal
     return popular
+
+def getTweetsPerDay(df):
+    times = []
+    day = parser.parse(df["created_at"][0])
+    tweetsPerDay = 0
+    for time in df["created_at"]:
+        dt = parser.parse(time)
+        if dt.day == day.day:
+            tweetsPerDay += 1
+        else:
+            times.append((day, tweetsPerDay))
+            day = dt
+            tweetsPerDay = 1
+    times.append((day, tweetsPerDay))
+    return times
+
+#gettting locations
+def getLocationsOfUsers(df):
+    countries = []
+    for coords in df["geo_coordinates"]:
+        if pd.notnull(coords) and coords != "loc: 0,0":
+            latlong = coords[5:]
+            lat, lng = latlong.split(",")
+            resp = urllib.request.urlopen(apiURL % latlong)
+            data = json.loads(resp.read().decode())
+            if len(data["results"]) > 0:
+                for location in data["results"][0]["address_components"]:
+                    if location["types"][0] == "country":
+                        countries.append(location["long_name"])
+                        break
+    counter = Counter(countries)
+    popular = counter.most_common()
+    return popular

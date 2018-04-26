@@ -3,6 +3,7 @@
 # – the timeline of the tweets activity
 # – the word cloud for all other hashtags used in the tweets from the dataset
 from collections import Counter
+import pandas as pd
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
@@ -11,20 +12,16 @@ from datetime import datetime
 import analysis as an
 from wordcloud import WordCloud
 
-def getTweetsPerDay(df):
-    times = []
-    day = parser.parse(df["created_at"][0])
-    tweetsPerDay = 0
-    for time in df["created_at"]:
-        dt = parser.parse(time)
-        if dt.day == day.day:
-            tweetsPerDay += 1
-        else:
-            times.append((day, tweetsPerDay))
-            day = dt
-            tweetsPerDay = 1
-    times.append((day, tweetsPerDay))
-    return times
+#API request
+apiKey = "AIzaSyCPCC8oAS-KmKp7PTSC3ZRwbsCqReR231I"
+apiURL = "https://maps.googleapis.com/maps/api/geocode/json?key=" + apiKey + "&latlng=%s&sensor=true/false"
+
+# needs to be dicussed
+def getTweetsAtTimeOfDay(df):
+    hours = []
+    hour = 0
+    tweetsAtHour
+    #for time in df[""]
 
 def getTweetsAtTimeOfDay(df):
     hours = []
