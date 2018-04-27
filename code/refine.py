@@ -18,13 +18,23 @@ def langCheck(df):
 
 # Checks whether username is valid according to Twitter specifications
 def fromUserCheck(df):
-    df[df["from_user"].apply(lambda x: len(x) <= 15) &
-    df["from_user"].apply(lambda x: re.search(r'[a-zA-Z0-9_]', x))]
+    # df = df.drop([df["text"].map(len) > 15])
+    # df = df.drop([df["text"].map(nameValidator) == False])
+    # df = list(filter(lambda x: len(x) <= 15, df["from_user"]))
+    # df = list(filter(lambda x: re.search(r'[a-zA-Z0-9_]', x), df["from_user"]))
+    # df[df["from_user"].apply(lambda x: len(x) <= 15) &
+    # df["from_user"].apply(lambda x: re.search(r'[a-zA-Z0-9_]', x))]
     return df
+
+
+def nameValidator(x):
+    return re.search(r'[a-zA-Z0-9_]', x)
 
 # Drops all rows that have a text length exceeding 140 chars
 def textCheck(df):
-    df[df["text"].apply(lambda x: len(x) <= 150)]
+    # df = df.drop([df["text"].map(len) > 140])
+    # df = list(filter(lambda x: len(x) <= 140, df["text"]))
+    # df[df["text"].apply(lambda x: len(x) <= 140)]
     return df
 
 # Creates new CSV file with the cleaned dataset
