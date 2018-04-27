@@ -4,7 +4,7 @@ import re
 
 from code import refine as rf
 
-test_data = "/cs/home/js321/Documents/CS2006/python/P2/tests/data/test_data_refine.csv"
+test_data = "./tests/data/test_data_refine.csv"
 
 
 class RefineTest(unittest.TestCase):
