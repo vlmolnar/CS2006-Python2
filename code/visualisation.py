@@ -28,7 +28,7 @@ def plotTweetsPerDay(data):
                 [num for dt,num in data],
                 linewidth = 5.0)
     plt.xlabel("dates of tweets")
-    plt.ylabel("tweeets per day")
+    plt.ylabel("tweets per day")
     plt.yscale("log")
     plt.gcf().autofmt_xdate()
     plt.show()
