@@ -5,6 +5,7 @@ python:
 
 install:
   - pip install -r requirements.txt
+  - pip3 install cartopy
 
 script:
   - python test.py
