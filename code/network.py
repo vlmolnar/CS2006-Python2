@@ -1,6 +1,6 @@
 import networkx as nx
 import matplotlib.pyplot as plt
-
+import mpld3
 import pandas as pd
 import re
 
@@ -40,14 +40,15 @@ def drawNetwork(df):
     G.add_edges_from(mentions_edges)
     G.add_edges_from(replies_edge)
     for u,v in retweet_edges:
-        G[u][v]['color'] = "red"
-    # [G[u][v]['color'] = "blue" for u,v in mentions_edges]
-    # [G[u][v]['color'] = "green" for u,v in replies_edge]
+        G[u][v]['color'] = 'red'
+    for u,v in mentions_edges:
+        G[u][v]['color'] = "blue"
+    for u,v in mentions_edges:
+        G[u][v]['color'] = "green"
     remove = [node for node,degree in G.degree() if degree < 40]
     G.remove_nodes_from(remove)
-    nx.draw_networkx(G, with_labels = False, node_size = 10)
-    plt.show()
-    # return G
+
+    return G
 
 if __name__ == "__main__":
     G = nx.Graph()

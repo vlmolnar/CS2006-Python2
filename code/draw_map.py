@@ -51,7 +51,6 @@ class toMap:
                                   facecolor='#FAFAFA',
                                   label=name)
         temp = set(country_names).symmetric_difference(set(made_it))
-        print("Countries that were not found", temp)
 
         plt.show()
 

@@ -1,7 +1,9 @@
 # CS2006-Python2
 
-This project takes a dataset from the twitter API and refines it before analysising it and visulaising the findings.
-The dataset was tweets in connection to the Comet landing performed by the EU Space Agency (ESA) in 2014. 
+This project takes a dataset from the twitter API and refines it before analysing it and visualising the findings.
+The dataset was tweets in connection to the Comet landing performed by the EU Space Agency (ESA) in 2014.
+
+**MAKE SURE TO ACTIVATE VENV BEFORE STARTING JUPYTER**
 
 # How to setup:
 * create a virtual environment
@@ -10,14 +12,14 @@ The dataset was tweets in connection to the Comet landing performed by the EU Sp
   - pip3 install --upgrade pip
   - pip3 install -r requirements.txt
   - pip3 install cartopy
- * destory virtual environment
+ * destroy virtual environment
     - deactivate
     - rm -rf /path/to/<venv_name>
-    
+
 # How to run:
 * start jupyter notebook
   - jupyter notebook
-* nagivate to the notebook you would like to see
+* navigate to the notebook you would like to see
   - data_refining.ipynb
     - for seeing how the raw data was refined before analysis
     - this notebook produces another csv file for later use
@@ -27,7 +29,6 @@ The dataset was tweets in connection to the Comet landing performed by the EU Sp
     - using all other modules created
   - test_notebook.ipynb
     - This notebook describes the automated tests used to test refine.py
-    - There is also a bash file **compare_output.sh** for a comand line test as well
+    - There is also a bash file **compare_output.sh** for a command line test as well
     - To run the unit tests from command line
       - python3 test.py
-      
