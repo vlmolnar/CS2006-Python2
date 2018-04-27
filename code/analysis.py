@@ -1,8 +1,3 @@
-# – calculate the total number of tweets, retweets and replies in the dataset
-# – calculate the number of different users tweeting in this dataset
-# – calculate the average number of tweets, retweets and replies sent by a user
-# – identify most popular hashtags
-
 from collections import Counter
 import json
 from dateutil import parser
@@ -10,13 +5,13 @@ from datetime import datetime
 import pandas as pd
 import re
 
-# return number of unique tweets in dataset
+# Returns number of unique tweets in dataset
 def getNumberOfOriginalTweets(df):
     retweets = getNumberOfRetweets(df)
     replies = getNumberOfReplies(df)
     return len(df) - (retweets + replies)
 
-# returns the number of tweets that match a certain pattern
+# Returns the number of tweets that match a certain pattern
 def getNumberOfRetweets(df):
     count = 0
     #count = df[df["text"].apply(lambda x: re.search("RT @", x))]
@@ -26,15 +21,15 @@ def getNumberOfRetweets(df):
             count += 1
     return count
 
-# return the number of tweets that were replies
+# Returns the number of reply tweets
 def getNumberOfReplies(df):
     return df["in_reply_to_user_id_str"].notnull().sum()
 
-# return the total number of tweets
+# Returns the total number of tweets
 def getTotalTweetNumber(df):
     return getNumberOfRetweets(df) + getNumberOfOriginalTweets(df) + getNumberOfReplies(df)
 
-# number of tweets defined as number of unique id's in the dataset
+# Returns thenumber of unique users in the dataset
 def getNumberOfUniqueUsers(df):
     return len(df["from_user"].unique())
 
@@ -49,7 +44,7 @@ def averagesForData(df):
     averageRepliesPerUser = getNumberOfReplies(df) / users
     return (averageTweetsPerUser, averageRetweetsPerUser, averageRepliesPerUser)
 
-#prints results from function averagesForData(df)
+# Prints results from function averagesForData(df)
 def printAverages(df):
     tw, retw, rep = averagesForData(df)
     print("Average number of tweets per user", tw);
@@ -57,7 +52,7 @@ def printAverages(df):
     print("Average number of replies per user", rep);
 
 
-# print data
+# Prints data
 def printAnalysis(df):
     print("Number of retweets:", getNumberOfRetweets(df))
     print("Number of replies:", getNumberOfReplies(df))
@@ -90,7 +85,7 @@ def getMostPopularApps(df):
     apps = getAppsUsed(df)
     return getPopularApps(5, apps)
 
-#Returns dictionary of the applications used to send out tweets and the
+# Returns dictionary of the applications used to send out tweets and the
 # number of tweets sent on said application
 def getAppsUsed(df):
     apps = {}
@@ -103,7 +98,7 @@ def getAppsUsed(df):
             apps[name] += 1
     return apps
 
-# Takes a dictionary and returns the "num" most popular and groups the others together
+# Takes a dictionary and returns the "num" most popular, and groups all others together
 def getPopularApps(num, apps):
     sortedkeys = []
     popular = {}
@@ -119,7 +114,7 @@ def getPopularApps(num, apps):
     popular["Other"] = othersVal
     return popular
 
-# This functio returns a list of tuples that are used to plot the number of
+# This function returns a list of tuples that are used to plot the number of
 # tweets per day
 def getTweetsPerDay(df):
     times = []
@@ -161,7 +156,7 @@ def getTweetsAtTimeOfDayLocal(df):
     return hours
 
 
-#gettting locations
+#Gets locations from the "results" column of the data set
 def getLocationsOfUsers(df):
     countries = []
     for coords in df["geo_coordinates"]:

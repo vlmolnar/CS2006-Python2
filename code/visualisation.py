@@ -1,7 +1,3 @@
-# build plots/visualisations for:
-# – the structure of the dataset (tweets/retweets/replies)
-# – the timeline of the tweets activity
-# – the word cloud for all other hashtags used in the tweets from the dataset
 from collections import Counter
 import pandas as pd
 import matplotlib as mpl
@@ -16,6 +12,8 @@ from wordcloud import WordCloud
 apiKey = "AIzaSyCPCC8oAS-KmKp7PTSC3ZRwbsCqReR231I"
 apiURL = "https://maps.googleapis.com/maps/api/geocode/json?key=" + apiKey + "&latlng=%s&sensor=true/false"
 
+
+# Returns bar chart to represent the number of tweets sent for each hour in the day
 def plotTweetsPerHour(data):
     hours = list(data.keys())
     tweets = data.values()
@@ -45,7 +43,6 @@ def makePie(labels, sizes):
 
 
 # Creates pie chart of the number of tweets, retweets and replies
-# Reference: https://matplotlib.org/examples/pie_and_polar_charts/pie_demo_features.html
 def plotStructure(df):
     labels = ["Original tweets", "Retweets", "Replies"]
     sizes = []
