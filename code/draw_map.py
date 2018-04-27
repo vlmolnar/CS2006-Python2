@@ -9,8 +9,8 @@ import numpy as np
 class toMap:
 
     def setMap(self):
-        # --- Save Countries,users---------
-        filename = 'locations.csv'
+        # --- get the countires and number of users---------
+        filename = '../data/locations.csv'
         num_users = []
         country_names = []
 
@@ -29,19 +29,18 @@ class toMap:
         # --- Build Map ---
         cmap = mpl.cm.Blues
 
-        made_it = []
         # --- Using the shapereader ---
         shapename = 'admin_0_countries'
         countries_shp = shpreader.natural_earth(resolution='110m',
                                                 category='cultural', name=shapename)
 
+        # --- Fill Map ---
         ax = plt.axes(projection=ccrs.Robinson())
         for country in shpreader.Reader(countries_shp).records():
             name = country.attributes['NAME_LONG']
             if name in country_names:
                 index = country_names.index(name)
                 num = num_users[index]
-                made_it.append(name)
                 ax.add_geometries(country.geometry, ccrs.PlateCarree(),
                                   facecolor=cmap(num / float(most_popular), 1),
                                   label=name)
@@ -50,7 +49,6 @@ class toMap:
                 ax.add_geometries(country.geometry, ccrs.PlateCarree(),
                                   facecolor='#FAFAFA',
                                   label=name)
-        temp = set(country_names).symmetric_difference(set(made_it))
 
         plt.show()
 
@@ -59,5 +57,7 @@ def main():
     m = toMap()
     m.setMap()
 
+# For if this module is ran from the command line
 if __name__ == "__main__":
+    print("If locations.csv does not exist, run location.py -k <apikey_filename>")
     main()

@@ -5,10 +5,6 @@ from datetime import datetime
 import pandas as pd
 import re
 
-# API request to Google Maps
-apiKey = "" # ENTER YOUR OWN API KEY
-apiURL = "https://maps.googleapis.com/maps/api/geocode/json?key=" + apiKey + "&latlng=%s&sensor=true/false"
-
 # Returns number of unique tweets in dataset
 def getNumberOfOriginalTweets(df):
     retweets = getNumberOfRetweets(df)
@@ -23,7 +19,6 @@ def getNumberOfRetweets(df):
         match = re.search("RT @", row["text"])
         if match != None:
             count += 1
-    print("does it work", count)
     return count
 
 # Returns the number of reply tweets
@@ -157,22 +152,3 @@ def getTweetsAtTimeOfDayLocal(df):
         else:
             hours[dt.hour] = 1
     return hours
-
-
-#Gets locations from the "results" column of the data set
-def getLocationsOfUsers(df):
-    countries = []
-    for coords in df["geo_coordinates"]:
-        if pd.notnull(coords) and coords != "loc: 0,0":
-            latlong = coords[5:]
-            lat, lng = latlong.split(",")
-            resp = urllib.request.urlopen(apiURL % latlong)
-            data = json.loads(resp.read().decode())
-            if len(data["results"]) > 0:
-                for location in data["results"][0]["address_components"]:
-                    if location["types"][0] == "country":
-                        countries.append(location["long_name"])
-                        break
-    counter = Counter(countries)
-    popular = counter.most_common()
-    return popular
