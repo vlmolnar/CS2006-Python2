@@ -8,18 +8,14 @@ from datetime import datetime
 import analysis as an
 from wordcloud import WordCloud
 
-# API request to Google Maps
-apiKey = "AIzaSyCPCC8oAS-KmKp7PTSC3ZRwbsCqReR231I"
-apiURL = "https://maps.googleapis.com/maps/api/geocode/json?key=" + apiKey + "&latlng=%s&sensor=true/false"
-
-
 # Returns bar chart to represent the number of tweets sent for each hour in the day
 def plotTweetsPerHour(data):
     hours = list(data.keys())
     tweets = data.values()
     width = 1/1.5
     plt.bar(hours, tweets, width, color="blue")
-
+    plt.xlabel("hour of day (24hr clock)")
+    plt.ylabel("number of tweets")
     plt.show()
 
 # Creates a line chart of tweet freuqency grouped by days
@@ -73,6 +69,7 @@ def plotHashtagCloud(df):
 
 
 # Creates a word cloud given a dictionary
+# dictionary calculated form @analysis.getMostPopularHashtags
 def plotWordCloud(hashtags):
     wordcloud = WordCloud(
                           background_color='white',

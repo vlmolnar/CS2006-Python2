@@ -5,9 +5,12 @@ import pandas as pd
 import re
 
 #get all the nodes needed for the graph
+# nodes are the uniqueue users
 def getNodesOfUsers(df):
     return list(df["from_user"].unique())
 
+# This function returns the lists for the edges in the network
+# This function iterates the dataset and adds connections to the correct list
 def getEdgesOfRetweets(df):
     count = 0
     retweet_edges = []
@@ -28,9 +31,11 @@ def getEdgesOfRetweets(df):
                 if words[index - 1] == "RT":     # if retweet
                     retweet_edges.append((from_user, user))
                 else:
-                    mentions_edges.append((from_user, user))
+                    mentions_edges.append((from_user, user)) # if mention
     return retweet_edges, mentions_edges, replies_edge
 
+# This function returns the graph built from the nodes and edges returned from
+# the functions above.
 def drawNetwork(df):
     nodes = getNodesOfUsers(df)
     retweet_edges, mentions_edges, replies_edge = getEdgesOfRetweets(df)
@@ -49,8 +54,3 @@ def drawNetwork(df):
     G.remove_nodes_from(remove)
 
     return G
-
-if __name__ == "__main__":
-    G = nx.Graph()
-    df=pd.read_csv("../data/CometLanding_ref.csv")
-    drawNetwork(df)

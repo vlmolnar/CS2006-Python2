@@ -5,6 +5,10 @@ from datetime import datetime
 import pandas as pd
 import re
 
+# API request to Google Maps
+apiKey = "" # ENTER YOUR OWN API KEY
+apiURL = "https://maps.googleapis.com/maps/api/geocode/json?key=" + apiKey + "&latlng=%s&sensor=true/false"
+
 # Returns number of unique tweets in dataset
 def getNumberOfOriginalTweets(df):
     retweets = getNumberOfRetweets(df)
@@ -12,13 +16,14 @@ def getNumberOfOriginalTweets(df):
     return len(df) - (retweets + replies)
 
 # Returns the number of tweets that match a certain pattern
+# This pattern identifies all the retweets
 def getNumberOfRetweets(df):
     count = 0
-    #count = df[df["text"].apply(lambda x: re.search("RT @", x))]
     for i,row in df.iterrows():
         match = re.search("RT @", row["text"])
         if match != None:
             count += 1
+    print("does it work", count)
     return count
 
 # Returns the number of reply tweets
@@ -29,14 +34,11 @@ def getNumberOfReplies(df):
 def getTotalTweetNumber(df):
     return getNumberOfRetweets(df) + getNumberOfOriginalTweets(df) + getNumberOfReplies(df)
 
-# Returns thenumber of unique users in the dataset
+# Returns the number of unique users in the dataset
 def getNumberOfUniqueUsers(df):
     return len(df["from_user"].unique())
 
-# the average number of tweets and replies sent by a user
-#
-#   NEED TO DISCUSS!!!!
-#
+# the average number of tweets and replies sent by users
 def averagesForData(df):
     users = getNumberOfUniqueUsers(df)
     averageTweetsPerUser = getNumberOfOriginalTweets(df) / users
@@ -144,7 +146,8 @@ def getTweetsAtTimeOfDayGlobal(df):
     return hours
 
 # This function returns a dict of the number of tweets per hour
-# time zone is local time -- not exactly correct¬¬¬¬¬¬ # TODO change this because not needed
+# time zone is local time -- for this dataset the timezones were not provided
+# therefore both graphs for the tweets per hour are the same
 def getTweetsAtTimeOfDayLocal(df):
     hours = {}
     for time in df["time"]:
