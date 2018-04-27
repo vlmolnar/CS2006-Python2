@@ -18,7 +18,7 @@ The dataset was tweets in connection to the Comet landing performed by the EU Sp
 
 # How to run:
 * start jupyter notebook
-  - jupyter notebook
+  - jupyter notebook (make sure the virtual environment is active: source <venv_name>/bin/activate)
 * navigate to the notebook you would like to see
   - data_refining.ipynb
     - for seeing how the raw data was refined before analysis
