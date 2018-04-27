@@ -1,4 +1,4 @@
-s.ac.u#!/bin/bash
+#!/bin/bash
 
 # directory with results
 DIR=out
