@@ -8,7 +8,7 @@ from datetime import datetime
 import analysis as an
 from wordcloud import WordCloud
 
-#API request
+# API request to Google Maps
 apiKey = "AIzaSyCPCC8oAS-KmKp7PTSC3ZRwbsCqReR231I"
 apiURL = "https://maps.googleapis.com/maps/api/geocode/json?key=" + apiKey + "&latlng=%s&sensor=true/false"
 
@@ -22,17 +22,18 @@ def plotTweetsPerHour(data):
 
     plt.show()
 
+# Creates a line chart of tweet freuqency grouped by days
 def plotTweetsPerDay(data):
     plt.plot([dt.date() for dt,num in data],
                 [num for dt,num in data],
                 linewidth = 5.0)
     plt.xlabel("dates of tweets")
-    plt.ylabel("tweeets per day")
+    plt.ylabel("tweets per day")
     plt.yscale("log")
     plt.gcf().autofmt_xdate()
     plt.show()
 
-#Function that makes a pie chart given a list of labels and a list of sizes
+# Function that makes a pie chart given a list of labels and a list of sizes
 def makePie(labels, sizes):
     fig1, ax1 = plt.subplots()
     ax1.pie(sizes, labels=labels, autopct='%1.1f%%',
@@ -53,7 +54,7 @@ def plotStructure(df):
 
     makePie(labels, sizes)
 
-#Makes pir chart of the applications used to send the tweets
+# Creates pie chart of the applications used to send the tweets
 def plotApps(df):
     apps = an.getMostPopularApps(df)
     labels = []
@@ -65,17 +66,19 @@ def plotApps(df):
 
     makePie(labels, sizes)
 
+# Creates a word cloud of the 100 most popular hashtags
 def plotHashtagCloud(df):
     hashtags = an.getMostPopularHashtags(df, 100)
     plotWordCloud(hashtags)
 
 
+# Creates a word cloud given a dictionary
 def plotWordCloud(hashtags):
     wordcloud = WordCloud(
                           background_color='white',
                           width=1200,
                           height=1000
-                         ).generate(str(hashtags))  # {"a":10, "b": 30, "c": 3}
+                         ).generate(str(hashtags))
 
     print(wordcloud)
     fig = plt.figure(1)
