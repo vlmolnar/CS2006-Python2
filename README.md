@@ -37,4 +37,6 @@ The dataset was tweets in connection to the Comet landing performed by the EU Sp
 * to request new location data (updating locations.csv) an API key needs to be provided
   - The API is googleapis: maps
   - A key can be requested for free
-  - The API key is currently hard coded therefore source code will need to be changed 
+  - The API key must be stored on a single line in a text file
+    - an example keyfile is provided in data/
+  - run **location.py -k /path/to/keyfile**
