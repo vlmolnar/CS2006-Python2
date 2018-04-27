@@ -43,20 +43,13 @@ def drawNetwork(df):
         G[u][v]['color'] = "red"
     # [G[u][v]['color'] = "blue" for u,v in mentions_edges]
     # [G[u][v]['color'] = "green" for u,v in replies_edge]
-
-    nx.draw(G)
+    remove = [node for node,degree in G.degree() if degree < 40]
+    G.remove_nodes_from(remove)
+    nx.draw_networkx(G, with_labels = False, node_size = 10)
     plt.show()
-    return
-
-def drawSquare(G):
-    corners = [1,2,3,4]
-    edges = [(1,2), (2,3), (3,4), (4,1)]
-    G.add_nodes_from(corners)
-    G.add_edges_from(edges, color='b')
-
-    nx.draw(G, with_labels=True)
-    plt.show()
+    # return G
 
 if __name__ == "__main__":
     G = nx.Graph()
-    drawSquare(G)
+    df=pd.read_csv("../data/CometLanding_ref.csv")
+    drawNetwork(df)
