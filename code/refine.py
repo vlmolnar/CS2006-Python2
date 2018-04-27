@@ -18,13 +18,14 @@ def langCheck(df):
 
 # Checks whether username is valid according to Twitter specifications
 def fromUserCheck(df):
-    df[df["from_user"].apply(lambda x: len(x) <= 15) &
-    df["from_user"].apply(lambda x: re.search(r'[a-zA-Z0-9_]', x))]
+    df = df[df["from_user"].map(len) < 15]
+    df = df[df["from_user"].map(lambda x: re.search(r'[a-zA-Z0-9_]', x)) != None]
     return df
 
 # Drops all rows that have a text length exceeding 140 chars
+# 160 - 140 = 20, 20 extra characters for retweet (RT @<up to 15 chars>)
 def textCheck(df):
-    df[df["text"].apply(lambda x: len(x) <= 150)]
+    df = df[df["text"].map(len) <= 160]
     return df
 
 # Creates new CSV file with the cleaned dataset
