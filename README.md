@@ -1,7 +1,9 @@
 # CS2006-Python2
 
-This project takes a dataset from the twitter API and refines it before analysing it and visualising the findings.
-The dataset was tweets in connection to the Comet landing performed by the EU Space Agency (ESA) in 2014.
+This project was an assignment for the CS2006 (Advanced Programming Projects) module at the University of St Andrews. The assignment specifications and the data set used were provided to us by Dr Alexander Konovalov.
+
+The project takes a dataset from the twitter API and refines it before analysing it and visualising the findings.
+The dataset contains tweets in connection to the Comet landing performed by the EU Space Agency (ESA) in 2014.
 
 **MAKE SURE TO ACTIVATE VENV BEFORE STARTING JUPYTER**
 
